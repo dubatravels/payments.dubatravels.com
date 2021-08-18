@@ -1,0 +1,70 @@
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  transition-duration: 0.4s;
+  user-select: none;
+  z-index: 2;
+  position: fixed;
+}
+
+.starship {
+  /* background: #8ce78c; */
+  fill: #1c1c1c;
+  /* width: 4vw; */
+  padding-left: 22px;
+}
+
+.email-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.landing-page-email-input {
+  width: 420px;
+  height: 40px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+.email-submit-button {
+  background-color: #1c1c1c;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: x-small;
+  transition-duration: 0.4s;
+  border: 1px solid #1c1c1c;
+}
+
+.email-submit-button:hover {
+  background: white;
+  color: #1c1c1c;
+}
+
+.email-submit-button:disabled {
+  border: 1px solid #8ce78c;
+  background: #8ce78c;
+  color: #1c1c1c;
+}
+.email-submit-button:active {
+  background: white;
+  color: #1c1c1c;
+}
+
+@media only screen and (max-width: 600px) {
+  .landing-page-email-input {
+    width: 80vw;
+  }
+}

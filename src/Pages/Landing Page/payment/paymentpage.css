@@ -1,0 +1,102 @@
+.payment-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 420px;
+  /* background: lavender; */
+}
+
+.payment-page-heading{
+    display: flex;
+    flex-direction: column;
+    /* text-align: right; */
+    font-weight: bold;
+    margin-bottom: 15px ;
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+    color: #000b5c;
+}
+
+.payment-page-heading h1{
+        font-weight: 900;
+        margin: 10px 0;
+}
+
+.payment-page-heading-order-number{
+    margin-bottom: 10px ;
+    opacity: .75;
+    /* color: grey; */
+}
+
+.payment-page-detail-section{
+    text-align: left;
+    width: 100%;
+    font-weight: 500;
+    color: grey;
+    border-bottom: 1px solid lightgray;
+}
+
+.payment-page-detail-item{
+    display: flex;
+    justify-content: space-between;
+    /* width: 100%; */
+    margin: 10px 0;   
+}
+
+.payment-page-cost-item{
+    display: flex;
+    justify-content: space-between;
+    color: black;
+    /* font-weight: 700; */
+    margin-top: 20px ;
+    margin-bottom: 10px ;
+    
+}
+
+.payment-page-cost-item-2{
+    display: flex;
+    justify-content: space-between;
+    font-weight: 400;
+    margin-bottom: 20px ;
+    font-size: 12px;
+    font-weight: bold;
+    color: grey;
+}
+
+.payment-page-pay-button{
+    user-select: none;
+    margin-top: 20px;
+    /* background: lightgreen; */
+    background: #000b5c;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    font-weight: 900;
+    /* color: #1c1c1c; */
+    color: white;
+    font-size: 14px;
+    /* border: 2px solid lightgreen ; */
+    border: 2px solid #000b5c;
+    /* letter-spacing: .02rem; */
+    /* text-transform: uppercase; */
+    /* padding: 10px 20px; */
+    transition-duration: .4s;
+}
+
+.payment-page-pay-button:hover{
+    background: whitesmoke;
+    border: 2px solid #000b5c;
+    /* border: 2px solid green; */
+/* color: green; */
+color: #000b5c;
+}
+
+.total{
+    font-size: 24px;
+    font-weight: 900;
+        color: #000b5c;
+
+}

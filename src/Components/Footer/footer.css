@@ -1,0 +1,32 @@
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 2vh;
+  width: 100%;
+  background: whitesmoke;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  padding-top: 1px;
+  padding-bottom: 3px;
+}
+
+.footer-typo {
+  font-size: x-small;
+  opacity: 0.5;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  user-select: none;
+}
+
+.footer-typo:hover {
+  opacity: 0.75;
+}
+
+@media only screen and (max-width: 600px) {
+  .footer {
+    background: white;
+  }
+}
