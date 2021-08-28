@@ -9,7 +9,7 @@ const Head = ({ title, content }) => {
     <Helmet>
       <meta charSet="utf-8" />
       <title>{title ? `${title} - Duba Travels` : "Duba Travel and Tourism"}</title>
-      <link rel="icon" href="https://portal.dubauae.com/favicon.ico" />
+      <link rel="icon" href="https://portal.dubatravels.com/favicon.ico" />
       <meta name="viewport" content="width=device-width, user-scalable=no" />
       <meta name="theme-color" content="#000000" />
       <meta name="description" content={content || "Duba Travels Payments"} />

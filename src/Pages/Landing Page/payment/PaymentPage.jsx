@@ -6,9 +6,9 @@ import "./paymentpage.css";
 const PaymentPage = ({ match, setSiteTitle, setSiteContent }) => {
   const [loading, setLoading] = useState(true);
   const [amount, setAmount] = useState({
-    subtotal: "0",
-    charges: "0",
-    total: "0",
+    subtotal: "000.00",
+    charges: "00.00",
+    total: "000.00",
     linkValue: 1,
     invoice: "",
     date: "00/00/000",
@@ -22,6 +22,7 @@ const PaymentPage = ({ match, setSiteTitle, setSiteContent }) => {
           amount: resultAmount, date,
           time, invoice,
         } = response.data.paymentData;
+
         const value = parseFloat(resultAmount);
         const tax = value * 0.03;
         const taxOfTax = tax * 0.03;
