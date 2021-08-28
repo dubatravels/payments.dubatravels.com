@@ -116,7 +116,7 @@ const PaymentPage = ({ match, setSiteTitle, setSiteContent }) => {
       </a>
       <div className="payment-page-pay-secured-message-section">
         <svg xmlns="http://www.w3.org/2000/svg" className="payment-page-pay-secured-message-section-icon" viewBox="0 0 24 24"><path d="M18 10v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10 0v-4c0-2.206 1.794-4 4-4s4 1.794 4 4v4h-8z" /></svg>
-        <span>Pay Securely with Momo Pay</span>
+        <span>Pay Securely with Mamo Pay</span>
       </div>
       <div className="payment-page-icons-section">
         <svg className="payment-page-icons-item" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg">
