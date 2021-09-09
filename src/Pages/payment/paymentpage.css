@@ -1,3 +1,20 @@
+.expired-page {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expired-page-image {
+  width: 30vw;
+}
+
+@media only screen and (max-width: 600px) {
+  .expired-page-image {
+    width: 50vw;
+  }
+}
+
 .payment-page-loading {
   display: flex;
   align-items: center;

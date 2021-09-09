@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import LandingPage from "./Pages/Landing Page/LandingPage";
-import PaymentPage from "./Pages/Landing Page/payment/PaymentPage";
+import PaymentPage from "./Pages/payment/PaymentPage";
 
 const Routes = ({ setSiteTitle, setSiteContent }) => {
   const routes = [
