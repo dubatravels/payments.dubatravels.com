@@ -4,7 +4,9 @@ import "./landingpage.css";
 
 const LandingPage = () => {
   useEffect(() => {
-    window.location.replace("https://www.dubatravels.com/");
+    setTimeout(() => {
+      window.location.replace("https://www.dubatravels.com/");
+    }, 5000);
   }, []);
 
   const accounts = [
@@ -31,7 +33,8 @@ const LandingPage = () => {
   return (
     <div className="landing-page">
       {accounts.map((item) => (
-        <div key={item.bankName} className="landing-page-account-item">
+        // <div hidden key={item.bankName} className="landing-page-account-item">
+        <div hidden key={item.bankName}>
           <div className="landing-page-account-item-logo-section">
             <img className="landing-page-account-item-logo" src={item.logo} alt={item.bankName} />
           </div>

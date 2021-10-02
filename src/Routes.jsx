@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 import LandingPage from "./Pages/Landing Page/LandingPage";
 import PaymentPage from "./Pages/payment/PaymentPage";
+import Invoice from "./Pages/invoice/Invoice";
 
 const Routes = ({ setSiteTitle, setSiteContent }) => {
   const routes = [
@@ -13,6 +14,10 @@ const Routes = ({ setSiteTitle, setSiteContent }) => {
     {
       path: "/:id",
       render: PaymentPage,
+    },
+    {
+      path: "/invoice/:id",
+      render: Invoice,
     },
   ];
 
