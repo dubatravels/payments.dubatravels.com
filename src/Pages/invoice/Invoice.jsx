@@ -12,6 +12,7 @@ const Invoice = ({ match, setSiteTitle }) => {
   const fetchInvoice = async (id) => {
     const invoiceData = await axios.get(`https://backend.dubatravels.com/payments/invoice/${id}`)
       .then((response) => response.data);
+    // const moment =
 
     if (invoiceData) {
       const {
@@ -32,6 +33,7 @@ const Invoice = ({ match, setSiteTitle }) => {
         total: `AED ${new Intl.NumberFormat("en-AE", { minimumFractionDigits: 2 }).format(total)}`,
         balance: `AED ${new Intl.NumberFormat("en-AE", { minimumFractionDigits: 2 }).format(total - amountPaid)}`,
         invoiceDate: Moment(invoiceDate).tz("Asia/Dubai").format("DD MMM YYYY"),
+        time: Moment(invoiceDate).tz("Asia/Dubai").format("LT"),
       });
       return setExisting(true);
     }
@@ -63,6 +65,37 @@ const Invoice = ({ match, setSiteTitle }) => {
         return url;
       });
   };
+
+  const additionalData = [
+    {
+      name: "Invoice Issued To",
+      data: data.to,
+    },
+    {
+      name: "Invoice Issuer",
+      data: data.issuer,
+    },
+    {
+      name: "Invoice Issue Date",
+      data: data.invoiceDate,
+    },
+    {
+      name: "Invoice Issue Time",
+      data: data.time,
+    },
+    {
+      name: "Invoice Due Date",
+      data: data.invoiceDate,
+    },
+    {
+      name: "Payment Method",
+      data: data.paymentMethod,
+    },
+    {
+      name: "Payment Terms",
+      data: "Upon Receipt",
+    },
+  ];
 
   if (existing) {
     return (
@@ -98,30 +131,15 @@ const Invoice = ({ match, setSiteTitle }) => {
 
           <div className="invocie-additional-section">
             <span className="invocie-additional-section-header">Additional Information</span>
-            <div className="invocie-additional-section-item">
-              <span>Invoice Issued To:</span>
-              <span>{data.to}</span>
-            </div>
-            <div className="invocie-additional-section-item">
-              <span>Invoice Issuer:</span>
-              <span>{data.issuer}</span>
-            </div>
-            <div className="invocie-additional-section-item">
-              <span>Invoice Issue Date:</span>
-              <span>{data.invoiceDate}</span>
-            </div>
-            <div className="invocie-additional-section-item">
-              <span>Invoice Due Date:</span>
-              <span>{data.invoiceDate}</span>
-            </div>
-            <div className="invocie-additional-section-item">
-              <span>Payment Method:</span>
-              <span>{data.paymentMethod}</span>
-            </div>
-            <div className="invocie-additional-section-item">
-              <span>Payment Terms:</span>
-              <span>Upon Receipt</span>
-            </div>
+            {additionalData.map((item) => (
+              <div className="invocie-additional-section-item">
+                <span>
+                  {item.name}
+                  :
+                </span>
+                <span>{item.data}</span>
+              </div>
+            ))}
             <div className="invocie-signature-section">
               <span className="invocie-signature-section-header">CRYPTOGRAPHIC SIGNATURE</span>
               <span className="invocie-additional-section-item-signature">{data.hash}</span>

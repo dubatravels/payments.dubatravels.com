@@ -6,7 +6,12 @@
 }
 
 .invoice-page-hero {
-  background: #000b5c;
+  background-image: url("./texture.jpg");
+  background-color: #000b5c;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: white;
   width: 100%;
   display: flex;
@@ -118,7 +123,7 @@
 
 .invocie-additional-section {
   width: 100%;
-  margin-top: 25px;
+  margin-top: 50px;
 }
 
 .invocie-additional-section-header {
@@ -148,6 +153,7 @@
   text-transform: uppercase;
   color: white;
   margin-top: 15px;
+  cursor: pointer;
   border: none;
   box-shadow: 2px 2px 4px #000b5c;
   transition-duration: 0.4s;

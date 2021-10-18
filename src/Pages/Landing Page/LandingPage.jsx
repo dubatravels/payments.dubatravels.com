@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
+import Search from "../../Components/homepage/Search";
 
 import "./landingpage.css";
 
 const LandingPage = () => {
   useEffect(() => {
-    setTimeout(() => {
-      window.location.replace("https://www.dubatravels.com/");
-    }, 5000);
+    // setTimeout(() => {
+    //   window.location.replace("https://www.dubatravels.com/");
+    // }, 5000);
   }, []);
 
   const accounts = [
@@ -66,6 +67,8 @@ const LandingPage = () => {
           </div>
         </div>
       ))}
+
+      <Search />
     </div>
   );
 };
