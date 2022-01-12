@@ -1,0 +1,144 @@
+.installments-page {
+  /* background: lightblue; */
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
+  width: 480px;
+  padding: 10px 0 50px 0 ;
+  user-select: none;
+}
+
+.installments-page-header-section {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #000b5c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-transform: uppercase;
+  line-height: -1rem;
+  padding-top: 10px;
+}
+
+.installments-page-header-section h1 {
+  font-weight: 900;
+  margin-top: -10px;
+}
+
+.installments-page-Summary-header-section {
+  /* background: lavender; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-bottom: 1px solid lightgrey;
+  width: 100%;
+  text-align: left;
+  padding-bottom: 10px;
+  margin: 20px 0;
+}
+
+.installments-page-Summary-header-section-description {
+  margin-top: 15px;
+}
+
+.installments-page-info-section {
+  /* background: rgb(48, 48, 173); */
+  width: 100%;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.installments-page-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color: grey;
+  margin: 10px 0;
+}
+
+.installments-page-amount-section {
+  width: 100%;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.installments-page-amount-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color: grey;
+  margin: 10px 0;
+}
+
+.installments-page-amount-item-black {
+  color: #1c1c1c;
+  color: #000b5c;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.installments-page-installments-section {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  border-bottom: 1px solid lightgrey;
+}
+
+.installments-page-installments-section-header {
+  margin-bottom: 15px;
+}
+
+.installments-page-installments-section-item {
+  /* background: white; */
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 5px 0;
+  /* padding: 5px 5px; */
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: bold;
+  color: grey;
+}
+
+.installments-page-installments-section-item-today {
+  color: #1c1c1c;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.installments-page-button {
+  padding: 15px 25px;
+  cursor: pointer;
+  background: #000b5c;
+  color: white;
+  font-weight: bold;
+  transition-duration: 0.4s;
+  user-select: none;
+  margin: 20px 0;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+}
+
+.installments-page-button:hover {
+  color: #000b5c;
+  background: white;
+}
+
+
+@media only screen and (max-width: 600px) {
+.installments-page {
+width: 100%;
+}
+}

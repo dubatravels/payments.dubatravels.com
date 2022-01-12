@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-const Head = ({ title, content }) => {
+function Head({ title, content }) {
   const router = useLocation();
 
   return (
@@ -27,6 +27,6 @@ const Head = ({ title, content }) => {
       <meta property="twitter:image" content="https://payments.dubatravels.com/seo-image.jpg" />
     </Helmet>
   );
-};
+}
 
 export default Head;

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "./search.css";
 
@@ -8,7 +8,7 @@ const search = () => {
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [disableForm, setDisableForm] = useState(false);
 
-  const router = useHistory();
+  const router = useNavigate();
 
   const onChangeInvoiceNumber = (e) => {
     if (e.target.value.length > 6) return;
@@ -21,7 +21,7 @@ const search = () => {
 
     axios.get(`https://backend.dubatravels.com/payments/invoice/search/${invoiceNumber}`)
       .then((response) => {
-        if (response.data) return router.push(`/invoice/${invoiceNumber}`);
+        if (response.data) return router(`/invoice/${invoiceNumber}`);
         return setDisableForm(false);
       })
       .catch(() => setDisableForm(false));

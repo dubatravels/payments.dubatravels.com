@@ -3,7 +3,7 @@ import Search from "../../Components/homepage/Search";
 
 import "./landingpage.css";
 
-const LandingPage = () => {
+function LandingPage() {
   useEffect(() => {
     // setTimeout(() => {
     //   window.location.replace("https://www.dubatravels.com/");
@@ -19,6 +19,7 @@ const LandingPage = () => {
       swiftCode: "EBILAEAD",
       ibanNumber: "AE730260001015786061301",
       country: "United Arab Emirates",
+      currency: "AED",
     },
     {
       name: "Mohammed Farish",
@@ -28,6 +29,7 @@ const LandingPage = () => {
       swiftCode: "ADCBAEAA",
       ibanNumber: "AE390030011990831920001",
       country: "United Arab Emirates",
+      currency: "AED",
     },
   ];
 
@@ -67,10 +69,9 @@ const LandingPage = () => {
           </div>
         </div>
       ))}
-
       <Search />
     </div>
   );
-};
+}
 
 export default LandingPage;

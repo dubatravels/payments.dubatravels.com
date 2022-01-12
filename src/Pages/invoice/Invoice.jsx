@@ -2,13 +2,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Moment from "moment-timezone";
+import { useParams } from "react-router-dom";
 
 import "./invoice.css";
 
-const Invoice = ({ match, setSiteTitle }) => {
+function Invoice({ setSiteTitle }) {
   const [data, setData] = useState({});
   const [existing, setExisting] = useState(null);
-
+  // const [type, setType] = useState(0);
   const fetchInvoice = async (id) => {
     const invoiceData = await axios.get(`https://backend.dubatravels.com/payments/invoice/${id}`)
       .then((response) => response.data);
@@ -41,8 +42,10 @@ const Invoice = ({ match, setSiteTitle }) => {
     return setExisting(false);
   };
 
+  const params = useParams();
+
   useEffect(() => {
-    const { id } = match.params;
+    const { id } = params;
     fetchInvoice(id);
     setSiteTitle("Invoice");
     return () => {
@@ -51,7 +54,7 @@ const Invoice = ({ match, setSiteTitle }) => {
   }, []);
 
   const onClickDownload = () => {
-    const { id } = match.params;
+    const { id } = params;
     axios.get(`https://backend.dubatravels.com/payments/invoice/download/${id}`, {
       responseType: "blob",
     })
@@ -180,6 +183,6 @@ const Invoice = ({ match, setSiteTitle }) => {
       <span>Loading Invoice</span>
     </div>
   );
-};
+}
 
 export default Invoice;

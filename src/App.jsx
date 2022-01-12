@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-
+// react/function-component-definition
 import "./App.css";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
@@ -8,9 +8,10 @@ import Footer from "./Components/Footer/Footer";
 import Routes from "./Routes";
 import Head from "./Components/head/Head";
 
-const App = () => {
+function App() {
   const [siteTitle, setSiteTitle] = useState(null);
   const [siteContent, setSiteContent] = useState(null);
+
   return (
     <Router>
       <Head title={siteTitle} content={siteContent} />
@@ -24,5 +25,5 @@ const App = () => {
       <Footer />
     </Router>
   );
-};
+}
 export default App;

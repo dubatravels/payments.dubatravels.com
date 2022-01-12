@@ -1,11 +1,13 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import {
+  Route, Routes as Switch, Navigate as Redirect, useLocation,
+} from "react-router-dom";
 
 import LandingPage from "./Pages/Landing Page/LandingPage";
 import PaymentPage from "./Pages/payment/PaymentPage";
 import Invoice from "./Pages/invoice/Invoice";
 
-const Routes = ({ setSiteTitle, setSiteContent }) => {
+function Routes({ setSiteTitle, setSiteContent }) {
   const routes = [
     {
       path: "/",
@@ -21,25 +23,26 @@ const Routes = ({ setSiteTitle, setSiteContent }) => {
     },
   ];
 
+  const location = useLocation();
+
   return (
-    <Switch>
+    <Switch location={location} key={location.pathname}>
       {routes.map((route) => (
         <Route
           key={route.path}
-          exact
           path={route.path}
-          render={(props) => (
+          element={(
             <route.render
-              {...props}
               setSiteContent={setSiteContent}
               setSiteTitle={setSiteTitle}
             />
           )}
         />
       ))}
-      <Route exact render={() => <Redirect to="/" />} />
+      <Route path="*" element={<Redirect replace to="/" />} />
+      {/* <Route exact render={() => <Redirect to="/" />} /> */}
     </Switch>
   );
-};
+}
 
 export default Routes;

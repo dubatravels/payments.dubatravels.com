@@ -7,3 +7,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   touch-action: pan-y;
 }
+
+::selection {
+  background: #000b5c;
+  color: white;
+}
