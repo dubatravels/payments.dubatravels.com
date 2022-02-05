@@ -1,0 +1,19 @@
+.homepage-bank-accounts-section {
+  width: 100%;
+  min-height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 120px 0;
+  margin-top: 20px;
+}
+
+.homepage-bank-accounts-items-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}

@@ -3,17 +3,17 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Moment from "moment-timezone";
 import { useParams } from "react-router-dom";
+import accounting from "accounting";
 
 import "./invoice.css";
 
 function Invoice({ setSiteTitle }) {
   const [data, setData] = useState({});
   const [existing, setExisting] = useState(null);
-  // const [type, setType] = useState(0);
+
   const fetchInvoice = async (id) => {
     const invoiceData = await axios.get(`https://backend.dubatravels.com/payments/invoice/${id}`)
       .then((response) => response.data);
-    // const moment =
 
     if (invoiceData) {
       const {
@@ -30,12 +30,13 @@ function Invoice({ setSiteTitle }) {
 
       setData({
         ...invoiceData,
-        amountPaid: `AED ${new Intl.NumberFormat("en-AE", { minimumFractionDigits: 2 }).format(amountPaid)}`,
-        total: `AED ${new Intl.NumberFormat("en-AE", { minimumFractionDigits: 2 }).format(total)}`,
-        balance: `AED ${new Intl.NumberFormat("en-AE", { minimumFractionDigits: 2 }).format(total - amountPaid)}`,
+        amountPaid: accounting.formatMoney(amountPaid, "AED "),
+        total: accounting.formatMoney(total, "AED "),
+        balance: accounting.formatMoney(total - amountPaid, "AED "),
         invoiceDate: Moment(invoiceDate).tz("Asia/Dubai").format("DD MMM YYYY"),
-        time: Moment(invoiceDate).tz("Asia/Dubai").format("LT"),
+        time: Moment(invoiceDate).tz("Asia/Dubai").format("hh:mm A"),
       });
+
       return setExisting(true);
     }
 
@@ -117,9 +118,7 @@ function Invoice({ setSiteTitle }) {
                 {item.quantity}
               </span>
               <span className="invoice-page-item-cost">
-                AED
-                {" "}
-                {new Intl.NumberFormat("en-AE", { minimumFractionDigits: 2 }).format(item.unit_cost)}
+                {accounting.formatMoney(item.unit_cost, "AED ")}
               </span>
             </div>
           ))}

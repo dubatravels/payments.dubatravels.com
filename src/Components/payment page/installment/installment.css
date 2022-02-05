@@ -1,11 +1,9 @@
 .installments-page {
-  /* background: lightblue; */
   display: flex;
   align-items: center;
-  /* justify-content: center; */
   flex-direction: column;
   width: 480px;
-  padding: 10px 0 50px 0 ;
+  padding: 10px 0 50px 0;
   user-select: none;
 }
 
@@ -29,7 +27,6 @@
 }
 
 .installments-page-Summary-header-section {
-  /* background: lavender; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,7 +43,6 @@
 }
 
 .installments-page-info-section {
-  /* background: rgb(48, 48, 173); */
   width: 100%;
   padding-bottom: 10px;
   margin-bottom: 20px;
@@ -100,12 +96,10 @@
 }
 
 .installments-page-installments-section-item {
-  /* background: white; */
   display: flex;
   width: 100%;
   align-items: center;
   margin: 5px 0;
-  /* padding: 5px 5px; */
   justify-content: space-between;
   font-size: 18px;
   font-weight: bold;
@@ -136,9 +130,8 @@
   background: white;
 }
 
-
 @media only screen and (max-width: 600px) {
-.installments-page {
-width: 100%;
-}
+  .installments-page {
+    width: 100%;
+  }
 }

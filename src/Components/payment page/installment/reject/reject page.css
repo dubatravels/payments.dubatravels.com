@@ -1,0 +1,30 @@
+.installment-reject-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.installment-reject-page-icon-section {
+  height: 120px;
+  margin: 40px 0;
+}
+
+.installment-reject-page-icon {
+  height: 100%;
+  width: 100%;
+  fill: tomato;
+}
+
+.installment-reject-page-reason-section {
+  margin: 20px 0;
+  width: 380px;
+  text-align: center;
+}
+
+.installment-reject-page-link {
+  color: #000b5c;
+  font-weight: bold;
+  margin: 0 2px;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import Moment from "moment-timezone";
+import accounting from "accounting";
 
 import "./success.css";
 
@@ -15,8 +16,8 @@ function SuccessPage({ installmentData }) {
       <div className="installment-success-page-info-section">
 
         <div className="installment-success-page-info-section-item-type2">
-          <h1>{`AED ${installmentData.total}`}</h1>
-          <span className="installment-success-page-info-section-item-type2-date">{Moment(installmentData.lastUpdate).tz("Asia/Dubai").format("DD MMM YYYY • HH:mm:ss")}</span>
+          <h1>{`${accounting.formatMoney(installmentData.total, "AED ")}`}</h1>
+          <span className="installment-success-page-info-section-item-type2-date">{Moment(installmentData.lastUpdate).tz("Asia/Dubai").format("HH:mm:ss - DD MMM YYYY")}</span>
         </div>
 
         <div className="installment-success-page-info-section-item-type1">

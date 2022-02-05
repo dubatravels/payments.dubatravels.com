@@ -1,106 +1,98 @@
-.installment-success-page{
-    /* background: lavender; */
-    width: 560px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+.installment-success-page {
+  width: 560px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.installment-success-page-hero{
-    /* background: lightblue; */
-    width: 100%;
-    /* min-height: 20%; */
-    padding: 30px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-flex-direction: column;
-color: #000b5c;
+.installment-success-page-hero {
+  width: 100%;
+  padding: 30px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #000b5c;
 }
 
-.installment-success-page-hero-icon{
-    height: 180px;
-    fill: #000b5c;
-    margin-bottom: 25px;
+.installment-success-page-hero-icon {
+  height: 180px;
+  fill: #000b5c;
+  margin-bottom: 25px;
 }
 
-.installment-success-page-info-section{
-    display: flex;
-    /* background: lavenderblush; */
-    width: 100%;
-    /* min-height: 50%; */
-flex-direction: column;
-align-items: center;
-/* justify-content: center; */
+.installment-success-page-info-section {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
 }
 
-.installment-success-page-info-section-item-type1{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    flex-direction: column;
-    margin-bottom: 25px;
+.installment-success-page-info-section-item-type1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 25px;
 }
 
-.installment-success-page-info-section-item-type1-header{
-    font-weight: bold;
-    text-transform:uppercase ;
-    font-size: 14px;
-    margin-bottom: 5px;
+.installment-success-page-info-section-item-type1-header {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
-.installment-success-page-info-section-item-type1-reference{
-    background: white;
-    padding: 5px 20px;
-    color: #1c1c1c;
-color: #000b5c;
-font-weight: bold;
-font-size: 14px;
-margin-bottom: 1.5px ;
-border: 1px solid lightgrey;
-letter-spacing: 0.07rem;
-user-select: all;
-display: flex;
-align-items: center;
-justify-content: center;
-height: 30px;
-min-width: 60%;
-/* border-radius: 10px; */
+.installment-success-page-info-section-item-type1-reference {
+  background: white;
+  padding: 5px 20px;
+  color: #1c1c1c;
+  color: #000b5c;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 1.5px;
+  border: 1px solid lightgrey;
+  letter-spacing: 0.07rem;
+  user-select: all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  min-width: 60%;
 }
 
-.installment-success-page-info-section-item-type1-reference-icon{
-    height: 50%;
-    margin-right:  12px;
-    fill: #000b5c;
+.installment-success-page-info-section-item-type1-reference-icon {
+  height: 50%;
+  margin-right: 12px;
+  fill: #000b5c;
 }
 
-.installment-success-page-info-section-item-type2{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 85%;
-    font-size: 18px;
-    margin-bottom: 35px  ;
-    font-weight: bold;
-    /* color: #1c1c1c; */
-    color: #000b5c;
-    flex-direction: column;
+.installment-success-page-info-section-item-type2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85%;
+  font-size: 18px;
+  margin-bottom: 35px;
+  font-weight: bold;
+  color: #000b5c;
+  flex-direction: column;
 }
 
-.installment-success-page-info-section-item-type2-date{
-    font-size: 14px;
-    text-transform: uppercase;
+.installment-success-page-info-section-item-type2-date {
+  font-size: 14px;
+  margin-top: 10px;
+  text-transform: uppercase;
 }
-.installment-success-page-info-section-item-type2-processing-fee{
-    font-size: 12px;
-    margin-bottom: 5px;
-    /* text-transform: uppercase; */
+.installment-success-page-info-section-item-type2-processing-fee {
+  font-size: 12px;
+  margin-bottom: 5px;
 }
 
 @media only screen and (max-width: 600px) {
-.installment-success-page{
-width: 100%;
-}
+  .installment-success-page {
+    width: 100%;
+  }
 }

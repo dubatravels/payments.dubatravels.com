@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import accounting from "accounting";
+
 import Installment from "../../Components/payment page/installment/Installment";
 
 import "./paymentpage.css";
@@ -25,6 +27,27 @@ function PaymentPage({ setSiteTitle, setSiteContent }) {
   const navigate = useNavigate();
   const params = useParams();
 
+  const fetchInstallmentData = async (id) => {
+    let url = `https://backend.dubatravels.com/payments/installments/${id}`;
+
+    const token = searchParams.get("token");
+    if (token) { url = `https://backend.dubatravels.com/payments/installments/${id}?token=${token}`; }
+
+    const data = await axios.get(url)
+      .then((response) => response.data)
+      .catch(() => navigate("/", { replace: true }));
+
+    if (data.status === "expired") {
+      setExpired(true);
+      return setLoading(false);
+    }
+
+    setInstallmentData(data);
+    setSiteTitle("Installment Summary");
+    setDataType("installment");
+    return setLoading(false);
+  };
+
   const fetchInvoiceData = (id) => {
     axios.get(`https://backend.dubatravels.com/payments/${id}`)
       .then((response) => {
@@ -43,7 +66,7 @@ function PaymentPage({ setSiteTitle, setSiteContent }) {
         const taxOfTax = tax * 0.03;
         const totalValue = value + tax + taxOfTax;
 
-        const formatNumber = (num) => new Intl.NumberFormat("en-AE", { minimumFractionDigits: 2 }).format(num.toFixed(2));
+        const formatNumber = (num) => accounting.formatMoney(num, "AED ");
 
         setAmount({
           subtotal: formatNumber(value),
@@ -65,25 +88,8 @@ function PaymentPage({ setSiteTitle, setSiteContent }) {
       .catch(() => navigate("/", { replace: true }));
   };
 
-  const fetchInstallmentData = async (id) => {
-    let url = `https://backend.dubatravels.com/payments/installments/${id}`;
-
-    const token = searchParams.get("token");
-    if (token) { url = `https://backend.dubatravels.com/payments/installments/${id}?token=${token}`; }
-
-    const data = await axios.get(url)
-      .then((response) => response.data)
-      .catch(() => navigate("/", { replace: true }));
-
-    if (data.status === "expired") {
-      setExpired(true);
-      return setLoading(false);
-    }
-
-    setInstallmentData(data);
-    setSiteTitle("Installment Summary");
-    setDataType("installment");
-    return setLoading(false);
+  const onClickPayNow = () => {
+    window.location = `https://business.mamopay.com/pay/duba?a=${amount.linkValue.toFixed(2)}`;
   };
 
   useEffect(() => {
@@ -145,31 +151,25 @@ function PaymentPage({ setSiteTitle, setSiteContent }) {
           <div className="payment-page-cost-item">
             <span className="payment-page-cost-item-title">Subtotal</span>
             <span>
-              AED
-              {" "}
               {amount.subtotal}
             </span>
           </div>
           <div className="payment-page-cost-item-2">
             <span className="payment-page-cost-item-title">Bank Charges</span>
             <span>
-              AED
-              {" "}
               {amount.charges}
             </span>
           </div>
           <div className="payment-page-cost-item total">
             <span className="payment-page-cost-item-title">Total</span>
             <span>
-              AED
-              {" "}
               {amount.total}
             </span>
           </div>
         </div>
-        <a href={`https://business.mamopay.com/pay/duba?a=${amount.linkValue.toFixed(2)}`} className="payment-page-pay-button">
+        <button type="button" className="payment-page-pay-button" onClick={onClickPayNow}>
           <span>Pay Now</span>
-        </a>
+        </button>
         <div className="payment-page-pay-secured-message-section">
           <svg xmlns="http://www.w3.org/2000/svg" className="payment-page-pay-secured-message-section-icon" viewBox="0 0 24 24"><path d="M18 10v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10 0v-4c0-2.206 1.794-4 4-4s4 1.794 4 4v4h-8z" /></svg>
           <span>Pay Securely with Mamo Pay</span>
@@ -198,8 +198,6 @@ function PaymentPage({ setSiteTitle, setSiteContent }) {
     );
   }
 
-  if (dataType === "installment") {
-    return (<Installment installmentData={installmentData} />);
-  }
+  if (dataType === "installment") return (<Installment installmentData={installmentData} />);
 }
 export default PaymentPage;

@@ -1,0 +1,45 @@
+.homepage-bank-account-item {
+  /* background: lavender; */
+  background: white;
+  height: 320px;
+  margin: 10px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid lightgray;
+}
+
+.homepage-bank-account-item-logo {
+  width: 240px;
+  height: 40%;
+}
+
+.homepage-bank-account-item-info-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.homepage-bank-account-item-info-section-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 4px 0;
+}
+
+.homepage-bank-account-item-info-section-item-type {
+  color: grey;
+  width: 120px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.homepage-bank-account-item-info-section-item-data {
+  font-weight: bold;
+  color: #1c1c1c;
+  font-size: 14px;
+}

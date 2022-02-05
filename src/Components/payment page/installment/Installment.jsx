@@ -19,8 +19,6 @@ function Installment({ installmentData }) {
   const [reject, setReject] = useState(null);
 
   useEffect(() => {
-    // console.log(installmentData);
-
     if (installmentData.success || installmentData.status === "paid") {
       return setSuccess(true);
     }
