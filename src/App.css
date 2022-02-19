@@ -21,6 +21,48 @@ h1{
   min-height: 80vh;
   display: flex;
   justify-content: center;
-  margin-top: 10vh;
+  margin-top: 75px;
   padding: 2% 5%;
+}
+
+
+.payment-page-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 420px;
+  user-select: none;
+}
+
+.payment-page-loading svg {
+  height: 5vh;
+  margin-bottom: 20px;
+  -webkit-animation: spin 1s linear infinite;
+  -moz-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  fill: #00135f;
+}
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.invisible-link {
+  position: fixed;
+  font-size: 2px;
+  opacity: 0;
 }

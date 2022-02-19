@@ -1,7 +1,7 @@
 .header {
   position: fixed;
   width: 100vw;
-  height: 10vh;
+  height: 75px;
   display: flex;
   align-items: center;
   z-index: 3;

@@ -1,13 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  useNavigate, useSearchParams,
+  useLocation,
+} from "react-router-dom";
 import accounting from "accounting";
 
 import Installment from "../../Components/payment page/installment/Installment";
 
 import "./paymentpage.css";
 
-function PaymentPage({ setSiteTitle, setSiteContent }) {
+function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
   const [loading, setLoading] = useState(true);
   const [expired, setExpired] = useState(false);
   const [amount, setAmount] = useState({
@@ -25,67 +28,80 @@ function PaymentPage({ setSiteTitle, setSiteContent }) {
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const params = useParams();
+  const location = useLocation();
 
   const fetchInstallmentData = async (id) => {
-    let url = `https://backend.dubatravels.com/payments/installments/${id}`;
+    try {
+      let url = `https://backend.dubatravels.com/payments/installments/${id}`;
 
-    const token = searchParams.get("token");
-    if (token) { url = `https://backend.dubatravels.com/payments/installments/${id}?token=${token}`; }
+      const token = searchParams.get("token");
+      if (token) { url = `https://backend.dubatravels.com/payments/installments/${id}?token=${token}`; }
 
-    const data = await axios.get(url)
-      .then((response) => response.data)
-      .catch(() => navigate("/", { replace: true }));
+      const data = await axios.get(url)
+        .then((response) => response.data)
+        .catch(() => navigate("/", { replace: true }));
 
-    if (data.status === "expired") {
-      setExpired(true);
+      if (data.status === "expired") {
+        setExpired(true);
+        return setLoading(false);
+      }
+
+      setInstallmentData(data);
+      setSiteTitle("Installment Summary");
+      setDataType("installment");
       return setLoading(false);
+    } catch (error) {
+      setPaymentPage(false);
+      return navigate("/", { replace: true });
     }
-
-    setInstallmentData(data);
-    setSiteTitle("Installment Summary");
-    setDataType("installment");
-    return setLoading(false);
   };
 
   const fetchInvoiceData = (id) => {
-    axios.get(`https://backend.dubatravels.com/payments/${id}`)
-      .then((response) => {
-        const {
-          amount: resultAmount, date,
-          time, invoice, expired: expiredLink,
-        } = response.data.paymentData;
+    try {
+      axios.get(`https://backend.dubatravels.com/payments/${id}`)
+        .then((response) => {
+          const {
+            amount: resultAmount, date,
+            time, invoice, expired: expiredLink,
+          } = response.data.paymentData;
 
-        if (expiredLink) {
-          setLoading(false);
-          return setExpired(true);
-        }
+          if (expiredLink) {
+            setLoading(false);
+            return setExpired(true);
+          }
 
-        const value = parseFloat(resultAmount);
-        const tax = value * 0.03;
-        const taxOfTax = tax * 0.03;
-        const totalValue = value + tax + taxOfTax;
+          const value = parseFloat(resultAmount);
+          const tax = value * 0.03;
+          const taxOfTax = tax * 0.03;
+          const totalValue = value + tax + taxOfTax;
 
-        const formatNumber = (num) => accounting.formatMoney(num, "AED ");
+          const formatNumber = (num) => accounting.formatMoney(num, "AED ");
 
-        setAmount({
-          subtotal: formatNumber(value),
-          charges: formatNumber(tax + taxOfTax),
-          total: formatNumber(totalValue),
-          linkValue: totalValue,
-          invoice,
-          date,
-          time,
-        });
+          setAmount({
+            subtotal: formatNumber(value),
+            charges: formatNumber(tax + taxOfTax),
+            total: formatNumber(totalValue),
+            linkValue: totalValue,
+            invoice,
+            date,
+            time,
+          });
 
-        setSiteContent(`Payment Summary of AED ${formatNumber(totalValue)}`);
-        setSiteTitle(`Pay AED ${formatNumber(totalValue)}`);
+          setSiteContent(`Payment Summary of AED ${formatNumber(totalValue)}`);
+          setSiteTitle(`Pay AED ${formatNumber(totalValue)}`);
 
-        setDataType("invoice");
-        return setLoading(false);
-      })
+          setDataType("invoice");
+          return setLoading(false);
+        })
       // eslint-disable-next-line no-return-assign
-      .catch(() => navigate("/", { replace: true }));
+        .catch(() => {
+          setPaymentPage(false);
+          navigate("/", { replace: true });
+        });
+    } catch (error) {
+      setPaymentPage(false);
+      navigate("/", { replace: true });
+    }
   };
 
   const onClickPayNow = () => {
@@ -93,7 +109,7 @@ function PaymentPage({ setSiteTitle, setSiteContent }) {
   };
 
   useEffect(() => {
-    const { id } = params;
+    const id = new URLSearchParams(location.search).get("id");
     setSiteTitle("Payment Summary");
 
     if (id.length === 6) {

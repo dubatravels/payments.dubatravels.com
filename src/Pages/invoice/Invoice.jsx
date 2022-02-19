@@ -1,52 +1,66 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import Moment from "moment-timezone";
-import { useParams } from "react-router-dom";
 import accounting from "accounting";
+import axios from "axios";
+import Chance from "chance";
 
 import "./invoice.css";
+
+import EmptyInvoice from "../emptypages/EmptyInvoice";
 
 function Invoice({ setSiteTitle }) {
   const [data, setData] = useState({});
   const [existing, setExisting] = useState(null);
+  const [emptyPage, setEmptyPage] = useState(false);
 
   const fetchInvoice = async (id) => {
-    const invoiceData = await axios.get(`https://backend.dubatravels.com/payments/invoice/${id}`)
-      .then((response) => response.data);
+    try {
+      const invoiceData = await axios.get(`https://backend.dubatravels.com/payments/invoice/${id}`)
+        .then((response) => response.data);
 
-    if (invoiceData) {
-      const {
-        items, amountPaid,
-        invoiceDate, to,
-      } = invoiceData;
-      let total = 0;
-      items.forEach((item) => {
-        const { unit_cost: unitCost, quantity } = item;
-        total += (unitCost * quantity);
-      });
+      if (invoiceData) {
+        const {
+          items, amountPaid,
+          invoiceDate, to,
+        } = invoiceData;
+        let total = 0;
+        items.forEach((item) => {
+          const { unit_cost: unitCost, quantity } = item;
+          total += (unitCost * quantity);
+        });
 
-      setSiteTitle(`${to}'s Invoice`);
+        setSiteTitle(`${to}'s Invoice`);
 
-      setData({
-        ...invoiceData,
-        amountPaid: accounting.formatMoney(amountPaid, "AED "),
-        total: accounting.formatMoney(total, "AED "),
-        balance: accounting.formatMoney(total - amountPaid, "AED "),
-        invoiceDate: Moment(invoiceDate).tz("Asia/Dubai").format("DD MMM YYYY"),
-        time: Moment(invoiceDate).tz("Asia/Dubai").format("hh:mm A"),
-      });
+        setData({
+          ...invoiceData,
+          amountPaid: accounting.formatMoney(amountPaid, "AED "),
+          total: accounting.formatMoney(total, "AED "),
+          balance: accounting.formatMoney(total - amountPaid, "AED "),
+          invoiceDate: Moment(invoiceDate).tz("Asia/Dubai").format("DD MMM YYYY"),
+          time: Moment(invoiceDate).tz("Asia/Dubai").format("hh:mm A"),
+        });
 
-      return setExisting(true);
+        return setExisting(true);
+      }
+
+      return setExisting(false);
+    } catch (error) {
+      return setExisting(false);
     }
-
-    return setExisting(false);
   };
 
-  const params = useParams();
+  const location = useLocation();
+  const chanceObj = new Chance();
 
   useEffect(() => {
-    const { id } = params;
+    const id = new URLSearchParams(location.search).get("id");
+
+    if (!id) {
+      return setEmptyPage(true);
+    }
+
     fetchInvoice(id);
     setSiteTitle("Invoice");
     return () => {
@@ -55,7 +69,7 @@ function Invoice({ setSiteTitle }) {
   }, []);
 
   const onClickDownload = () => {
-    const { id } = params;
+    const id = new URLSearchParams(location.search).get("id");
     axios.get(`https://backend.dubatravels.com/payments/invoice/download/${id}`, {
       responseType: "blob",
     })
@@ -101,6 +115,12 @@ function Invoice({ setSiteTitle }) {
     },
   ];
 
+  if (emptyPage) {
+    return (
+      <EmptyInvoice empty setSiteTitle={setSiteTitle} />
+    );
+  }
+
   if (existing) {
     return (
       <div className="invoice-page">
@@ -134,7 +154,7 @@ function Invoice({ setSiteTitle }) {
           <div className="invocie-additional-section">
             <span className="invocie-additional-section-header">Additional Information</span>
             {additionalData.map((item) => (
-              <div className="invocie-additional-section-item">
+              <div key={chanceObj.guid()} className="invocie-additional-section-item">
                 <span>
                   {item.name}
                   :
@@ -153,7 +173,6 @@ function Invoice({ setSiteTitle }) {
             >
               Download Duplicate Invoice
             </button>
-
             <div className="invoice-notes-section">
               <span>
                 From October 1, 2021, all of our invoices will be signed and verified using
@@ -169,7 +188,6 @@ function Invoice({ setSiteTitle }) {
 
   if (existing === false) {
     return (
-    //   <div>
       <div className="payment-page-loading">
         <span>This Invoice Doesn't Exist</span>
       </div>

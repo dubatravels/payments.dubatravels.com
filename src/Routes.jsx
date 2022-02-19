@@ -1,11 +1,14 @@
 import React from "react";
 import {
-  Route, Routes as Switch, Navigate as Redirect, useLocation,
+  Route, Routes as Switch,
+  Navigate as Redirect,
+  useLocation,
 } from "react-router-dom";
 
 import LandingPage from "./Pages/Landing Page/LandingPage";
-import PaymentPage from "./Pages/payment/PaymentPage";
 import Invoice from "./Pages/invoice/Invoice";
+import EmptyInvoice from "./Pages/emptypages/EmptyInvoice";
+import EmptyPaymentPage from "./Pages/emptypages/EmptyPaymentPage";
 
 function Routes({ setSiteTitle, setSiteContent }) {
   const routes = [
@@ -15,11 +18,15 @@ function Routes({ setSiteTitle, setSiteContent }) {
     },
     {
       path: "/:id",
-      render: PaymentPage,
+      render: EmptyPaymentPage,
+    },
+    {
+      path: "/invoice",
+      render: Invoice,
     },
     {
       path: "/invoice/:id",
-      render: Invoice,
+      render: EmptyInvoice,
     },
   ];
 
@@ -40,7 +47,6 @@ function Routes({ setSiteTitle, setSiteContent }) {
         />
       ))}
       <Route path="*" element={<Redirect replace to="/" />} />
-      {/* <Route exact render={() => <Redirect to="/" />} /> */}
     </Switch>
   );
 }

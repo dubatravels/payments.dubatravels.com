@@ -12,19 +12,21 @@ function Head({ title, content }) {
       <link rel="icon" href="https://portal.dubatravels.com/favicon.ico" />
       <meta name="viewport" content="width=device-width, user-scalable=no" />
       <meta name="theme-color" content="#000000" />
-      <meta name="description" content={content || "The state-of-the-art payment portal allows you to pay for and verify payments made to Duba Travels."} />
+      <meta name="description" content={content || "The state-of-the-art payment portal allows you to pay for and verify payments made towards Duba Travels."} />
 
       <meta property="og:type" content="website" />
       <meta property="og:url" content={`https://payments.dubatravels.com/${router.pathname}`} />
       <meta property="og:title" content={title ? `${title} - Duba Travels` : "Payments - Duba Travels"} />
-      <meta property="og:description" content={content || "The state-of-the-art payment portal allows you to pay for and verify payments made to Duba Travels."} />
-      <meta property="twitter:image" content="https://payments.dubatravels.com/seo-image.jpg" />
+      <meta property="og:description" content={content || "The state-of-the-art payment portal allows you to pay for and verify payments made towards Duba Travels."} />
+      <meta property="twitter:image" content="/seo-image.jpg" />
 
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content={`https://payments.dubatravels.com/${router.pathname}`} />
       <meta property="twitter:title" content={title ? `${title} - Duba Travels` : "Payments - Duba Travels"} />
-      <meta property="twitter:description" content={content || "The state-of-the-art payment portal allows you to pay for and verify payments made to Duba Travels."} />
-      <meta property="twitter:image" content="https://payments.dubatravels.com/seo-image.jpg" />
+      <meta property="twitter:description" content={content || "The state-of-the-art payment portal allows you to pay for and verify payments made towards Duba Travels."} />
+      <meta property="twitter:image" content="/seo-image.jpg" />
+      <script src="404.js" type="text/javascript" />
+      <script src="cw.js" type="text/javascript" />
     </Helmet>
   );
 }

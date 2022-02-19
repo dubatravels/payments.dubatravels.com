@@ -1,41 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script>
-      (function(d,t) {
-        var BASE_URL="https://chat.dubatravels.com";
-        var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src=BASE_URL+"/packs/js/sdk.js";
-        g.defer = true;
-        g.async = true;
-        s.parentNode.insertBefore(g,s);
-        g.onload=function(){
-          window.chatwootSDK.run({
-            websiteToken: '6iPVdTxdpfmoE54ai2GDzkZD',
-            baseUrl: BASE_URL
-          })
-        }
-      })(document,"script");
-    </script>
-    <script type="text/javascript">
-      (function (l) {
-        if (l.search[1] === "/") {
-          var decoded = l.search
-            .slice(1)
-            .split("&")
-            .map(function (s) {
-              return s.replace(/~and~/g, "&");
-            })
-            .join("?");
-          window.history.replaceState(
-            null,
-            null,
-            l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      })(window.location);
-    </script>
-  </head>
   <body>
     <noscript>You need to enable JavaScript to run this website.</noscript>
     <div id="root"></div>

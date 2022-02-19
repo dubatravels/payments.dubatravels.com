@@ -21,7 +21,7 @@ const search = () => {
 
     axios.get(`https://backend.dubatravels.com/payments/invoice/search/${invoiceNumber}`)
       .then((response) => {
-        if (response.data) return router(`/invoice/${invoiceNumber}`);
+        if (response.data) return router(`/invoice?id=${invoiceNumber}`);
         return setDisableForm(false);
       })
       .catch(() => setDisableForm(false));
@@ -43,6 +43,7 @@ const search = () => {
           id="search-box"
           type="text"
           autoFocus
+          readOnly={disableForm}
           disabled={disableForm}
           className="homepage-search-form-input"
           value={invoiceNumber}
