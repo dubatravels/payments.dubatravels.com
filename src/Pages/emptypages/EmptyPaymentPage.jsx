@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 function EmptyPaymentPage({ empty }) {
   const params = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     if (!empty) {
       const { id } = params;
-      if (id) return navigate(`/?id=${params.id}`, { replace: true });
+      const token = searchParams.get("token");
+      if (id) return navigate(token ? `/?id=${id}&token=${token}` : `/?id=${id}`, { replace: true });
       return navigate("/", { replace: true });
     }
 

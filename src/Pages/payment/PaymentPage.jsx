@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
   useNavigate, useSearchParams,
-  useLocation,
 } from "react-router-dom";
 import accounting from "accounting";
 
@@ -13,6 +12,8 @@ import "./paymentpage.css";
 function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
   const [loading, setLoading] = useState(true);
   const [expired, setExpired] = useState(false);
+  const [dataType, setDataType] = useState(null);
+  const [installmentData, setInstallmentData] = useState({});
   const [amount, setAmount] = useState({
     subtotal: "000.00",
     charges: "00.00",
@@ -23,12 +24,8 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
     time: "00:00",
   });
 
-  const [dataType, setDataType] = useState(null);
-  const [installmentData, setInstallmentData] = useState({});
-
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const fetchInstallmentData = async (id) => {
     try {
@@ -109,7 +106,7 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
   };
 
   useEffect(() => {
-    const id = new URLSearchParams(location.search).get("id");
+    const id = searchParams.get("id");
     setSiteTitle("Payment Summary");
 
     if (id.length === 6) {
@@ -216,4 +213,5 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
 
   if (dataType === "installment") return (<Installment installmentData={installmentData} />);
 }
+
 export default PaymentPage;

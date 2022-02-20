@@ -42,3 +42,9 @@
   color: #1c1c1c;
   font-size: 14px;
 }
+
+@media only screen and (max-width: 600px) {
+  .homepage-bank-account-item {
+    width: 100%;
+  }
+}
