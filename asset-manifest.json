@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.5b1d6a3c.css",
-    "main.js": "/static/js/main.b1de47d4.js",
+    "main.js": "/static/js/main.fedeccaa.js",
     "static/media/texture.jpg": "/static/media/texture.3b49bde2045568079f72.jpg",
     "static/media/search.svg": "/static/media/search.68568bc0eb160c3e06e1.svg",
     "index.html": "/index.html"
   },
   "entrypoints": [
     "static/css/main.5b1d6a3c.css",
-    "static/js/main.b1de47d4.js"
+    "static/js/main.fedeccaa.js"
   ]
 }
