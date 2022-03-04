@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Moment from "moment-timezone";
+import accounting from "accounting";
 
 import SuccessPage from "./success/SuccessPage";
 import RejectPage from "./reject/RejectPage";
@@ -8,11 +9,9 @@ import "./installment.css";
 
 function Installment({ installmentData }) {
   const [months, setMonths] = useState({
-    monthNow: "",
     monthTwo: "",
     monthThree: "",
     monthFour: "",
-    date: "",
   });
 
   const [success, setSuccess] = useState(null);
@@ -28,19 +27,14 @@ function Installment({ installmentData }) {
     }
 
     const moment = Moment().tz("Asia/Dubai");
-
-    const monthNow = moment.format("MMMM");
-    const monthTwo = moment.add(30, "days").format("MMMM");
-    const monthThree = moment.add(30, "days").format("MMMM");
-    const monthFour = moment.add(30, "days").format("MMMM");
-    const date = moment.format("DD");
+    const monthTwo = moment.add(1, "month").format("DD MMMM");
+    const monthThree = moment.add(1, "month").format("DD MMMM");
+    const monthFour = moment.add(1, "month").format("DD MMMM");
 
     return setMonths({
-      monthNow,
       monthTwo,
       monthThree,
       monthFour,
-      date,
     });
   }, []);
 
@@ -67,9 +61,10 @@ function Installment({ installmentData }) {
 
       <div className="installments-page-Summary-header-section">
         <h1> Installment Summary</h1>
-        <span className="installments-page-Summary-header-section-description">{installmentData.description}</span>
+        <span className="installments-page-Summary-header-section-description">
+          {installmentData.description}
+        </span>
       </div>
-
       <div className="installments-page-info-section">
         <div className="installments-page-info-item">
           <span>Reference</span>
@@ -97,53 +92,52 @@ function Installment({ installmentData }) {
         <div className="installments-page-amount-item">
           <span>Subtotal</span>
           <span>
-            AED
-            {" "}
-            {installmentData.amount.toFixed(2)}
+            {accounting.formatMoney(installmentData.amount, "AED ")}
           </span>
         </div>
         <div className="installments-page-amount-item">
           <span>Processing Fee</span>
           <span>
-            AED
-            {" "}
-            {installmentData.fees}
+            {accounting.formatMoney(installmentData.fees, "AED ")}
           </span>
         </div>
         <div className="installments-page-amount-item installments-page-amount-item-black">
           <span>Total</span>
           <span>
-            AED
-            {" "}
-            {installmentData.total}
+            {accounting.formatMoney(installmentData.total, "AED ")}
           </span>
         </div>
       </div>
 
       <div className="installments-page-installments-section">
         <div className="installments-page-installments-section-header">
-          <h1>Payment in 4 Terms</h1>
+          <span>TOTAL Payments</span>
         </div>
         <div className="installments-page-installments-section-item installments-page-installments-section-item-today">
           <span>Today</span>
-          <span>{`AED ${installmentData.installment}`}</span>
+          <span>{accounting.formatMoney(installmentData.installment, "AED ")}</span>
         </div>
         <div className="installments-page-installments-section-item">
-          <span>{`${months.date} ${months.monthTwo}`}</span>
-          <span>{`AED ${installmentData.installment}`}</span>
+          <span>{months.monthTwo}</span>
+          <span>{accounting.formatMoney(installmentData.installment, "AED ")}</span>
         </div>
         <div className="installments-page-installments-section-item">
-          <span>{`${months.date} ${months.monthThree}`}</span>
-          <span>{`AED ${installmentData.installment}`}</span>
+          <span>{months.monthThree}</span>
+          <span>{accounting.formatMoney(installmentData.installment, "AED ")}</span>
         </div>
         <div className="installments-page-installments-section-item">
-          <span>{`${months.date} ${months.monthFour}`}</span>
-          <span>{`AED ${installmentData.installment}`}</span>
+          <span>{months.monthFour}</span>
+          <span>{accounting.formatMoney(installmentData.installment, "AED ")}</span>
         </div>
       </div>
 
       <div className="installments-page-button" onClick={onClickPayButton}>
-        <span>{`PAY AED ${installmentData.installment} TODAY`}</span>
+        <span>{`PAY ${accounting.formatMoney(installmentData.installment, "AED ")} TODAY`}</span>
+      </div>
+
+      <div className="payment-page-pay-secured-message-section">
+        <svg xmlns="http://www.w3.org/2000/svg" className="payment-page-pay-secured-message-section-icon" viewBox="0 0 24 24"><path d="M18 10v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10 0v-4c0-2.206 1.794-4 4-4s4 1.794 4 4v4h-8z" /></svg>
+        <span>Pay Securely with Spotii</span>
       </div>
 
       <div className="payment-page-icons-section">

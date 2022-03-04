@@ -1,16 +1,15 @@
 .footer {
   position: fixed;
-  left: 0;
+  /* left: 0; */
   bottom: 0;
-  height: 2vh;
+  /* height: 2vh; */
   width: 100%;
   background: whitesmoke;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 3;
-  padding-top: 1px;
-  padding-bottom: 3px;
+  z-index: 100;
+  padding: 4px 0 ;
 }
 
 .footer-typo {
