@@ -80,7 +80,7 @@ function Installment({ installmentData }) {
         </div>
         <div className="installments-page-info-item">
           <span>Issue Time</span>
-          <span>{Moment(installmentData.issueDate).format("HH:mm A")}</span>
+          <span>{Moment(installmentData.issueDate).format("hh:mm A")}</span>
         </div>
         <div className="installments-page-info-item">
           <span>Issued By</span>

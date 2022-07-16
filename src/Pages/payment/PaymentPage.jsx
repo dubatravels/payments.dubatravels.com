@@ -32,7 +32,7 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
       let url = `https://backend.dubatravels.com/payments/installments/${id}`;
 
       const token = searchParams.get("token");
-      if (token) { url = `https://backend.dubatravels.com/payments/installments/${id}?token=${token}`; }
+      if (token) url = `https://backend.dubatravels.com/payments/installments/${id}?token=${token}`;
 
       const data = await axios.get(url)
         .then((response) => response.data)
@@ -211,7 +211,9 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
     );
   }
 
-  if (dataType === "installment") return (<Installment installmentData={installmentData} />);
+  if (dataType === "installment") return <Installment installmentData={installmentData} />;
+
+  return <div />;
 }
 
 export default PaymentPage;

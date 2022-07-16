@@ -1290,6 +1290,11 @@
     "@types/yargs" "^16.0.0"
     "chalk" "^4.0.0"
 
+"@jitsi/react-sdk@^1.0.0":
+  "integrity" "sha512-ioD16WVSfvP+FBfL5CCcmXWQfzfr/CHUhH8aYmXjEjLFpSqFGJbu4C6ndtpc1SV6/JTCeaRGZB2nNJExFy/VOA=="
+  "resolved" "https://registry.npmjs.org/@jitsi/react-sdk/-/react-sdk-1.0.0.tgz"
+  "version" "1.0.0"
+
 "@nodelib/fs.scandir@2.1.5":
   "integrity" "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="
   "resolved" "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
@@ -7651,7 +7656,7 @@
     "strip-ansi" "^6.0.1"
     "text-table" "^0.2.0"
 
-"react-dom@*", "react-dom@^17.0.2", "react-dom@>=16.8":
+"react-dom@*", "react-dom@^17.0.2", "react-dom@>=16.8", "react-dom@16 || 17":
   "integrity" "sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
   "version" "17.0.2"
@@ -7786,7 +7791,7 @@
     "serve-static" "1.13.2"
     "sourcemapped-stacktrace-node" "2.1.8"
 
-"react@*", "react@^16.3.0 || ^17.0.0", "react@^17.0.2", "react@>= 16", "react@>=16.3.0", "react@>=16.8", "react@17.0.2":
+"react@*", "react@^16.3.0 || ^17.0.0", "react@^17.0.2", "react@>= 16", "react@>=16.3.0", "react@>=16.8", "react@16 || 17", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
