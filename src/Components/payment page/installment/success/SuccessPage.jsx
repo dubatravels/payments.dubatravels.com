@@ -16,7 +16,21 @@ function SuccessPage({ installmentData }) {
       <div className="installment-success-page-info-section">
 
         <div className="installment-success-page-info-section-item-type2">
-          <h1>{`${accounting.formatMoney(installmentData.total, "AED ")}`}</h1>
+
+          <div className="installment-success-page-info-section-item-type2-div">
+            <span className="installment-success-page-info-section-item-type2-span">
+              Amount:
+              {" "}
+              {accounting.formatMoney(installmentData.amount, "AED ")}
+            </span>
+            <span>
+              Spotii Fee:
+              {" "}
+              {accounting.formatMoney(installmentData.fees, "AED ")}
+            </span>
+          </div>
+
+          <h1>{accounting.formatMoney(installmentData.total, "AED ")}</h1>
           <span className="installment-success-page-info-section-item-type2-date">{Moment(installmentData.lastUpdate).tz("Asia/Dubai").format("HH:mm:ss - DD MMM YYYY")}</span>
         </div>
 

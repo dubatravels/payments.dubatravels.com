@@ -56,10 +56,16 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
   const fetchInvoiceData = (id) => {
     try {
       axios.get(`https://backend.dubatravels.com/payments/${id}`)
+      // axios.get(`http://localhost:5000/payments/${id}`)
         .then((response) => {
           const {
-            amount: resultAmount, date,
-            time, invoice, expired: expiredLink,
+            amount: resultAmount,
+            date,
+            time, invoice,
+            expired: expiredLink,
+            grandTotal,
+            fees,
+            initiatedBy,
           } = response.data.paymentData;
 
           if (expiredLink) {
@@ -67,25 +73,21 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
             return setExpired(true);
           }
 
-          const value = parseFloat(resultAmount);
-          const tax = value * 0.03;
-          const taxOfTax = tax * 0.03;
-          const totalValue = value + tax + taxOfTax;
-
           const formatNumber = (num) => accounting.formatMoney(num, "AED ");
 
           setAmount({
-            subtotal: formatNumber(value),
-            charges: formatNumber(tax + taxOfTax),
-            total: formatNumber(totalValue),
-            linkValue: totalValue,
+            subtotal: resultAmount,
+            charges: fees,
+            total: grandTotal,
+            linkValue: grandTotal,
             invoice,
             date,
             time,
+            initiatedBy,
           });
 
-          setSiteContent(`Payment Summary of AED ${formatNumber(totalValue)}`);
-          setSiteTitle(`Pay AED ${formatNumber(totalValue)}`);
+          setSiteContent(`Payment Summary of AED ${formatNumber(grandTotal)}`);
+          setSiteTitle(`Pay AED ${formatNumber(grandTotal)}`);
 
           setDataType("invoice");
           return setLoading(false);
@@ -96,13 +98,14 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
           navigate("/", { replace: true });
         });
     } catch (error) {
+      // console.log(error);
       setPaymentPage(false);
       navigate("/", { replace: true });
     }
   };
 
   const onClickPayNow = () => {
-    window.location = `https://business.mamopay.com/pay/duba?a=${amount.linkValue.toFixed(2)}`;
+    window.location = `https://business.mamopay.com/pay/duba?a=${amount.linkValue}`;
   };
 
   useEffect(() => {
@@ -159,24 +162,28 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
             <span className="payment-page-detail-item-title">Payment Method:</span>
             <span>Credit/Debit Card</span>
           </div>
+          <div className="payment-page-detail-item">
+            <span className="payment-page-detail-item-title">Initiated By:</span>
+            <span>{amount.initiatedBy}</span>
+          </div>
         </div>
         <div className="payment-page-detail-section">
           <div className="payment-page-cost-item">
             <span className="payment-page-cost-item-title">Subtotal</span>
             <span>
-              {amount.subtotal}
+              {accounting.formatMoney(amount.subtotal, "AED ")}
             </span>
           </div>
           <div className="payment-page-cost-item-2">
             <span className="payment-page-cost-item-title">Bank Charges</span>
             <span>
-              {amount.charges}
+              {accounting.formatMoney(amount.charges, "AED ")}
             </span>
           </div>
           <div className="payment-page-cost-item total">
             <span className="payment-page-cost-item-title">Total</span>
             <span>
-              {amount.total}
+              {accounting.formatMoney(amount.total, "AED ")}
             </span>
           </div>
         </div>

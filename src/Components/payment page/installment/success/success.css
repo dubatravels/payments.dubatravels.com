@@ -81,6 +81,19 @@
   flex-direction: column;
 }
 
+.installment-success-page-info-section-item-type2-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+.installment-success-page-info-section-item-type2-span {
+  padding: 5px 10px;
+}
+
 .installment-success-page-info-section-item-type2-date {
   font-size: 14px;
   margin-top: 10px;
