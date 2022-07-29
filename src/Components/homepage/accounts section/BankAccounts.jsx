@@ -1,9 +1,12 @@
 import React from "react";
-
-import accounts from "./accounts";
+import Chance from "chance";
 
 import "./bank accounts.css";
+
+import accounts from "./accounts";
 import BankAccountItem from "./BankAccountItem";
+
+const chanceObj = new Chance();
 
 function BankAccounts() {
   return (
@@ -11,7 +14,7 @@ function BankAccounts() {
       <h1>Bank Accounts</h1>
       <span>Our bank accounts are listed below.</span>
       <div className="homepage-bank-accounts-items-section">
-        {accounts.map((item) => <BankAccountItem key={item.id} data={item} />)}
+        {accounts.map((item) => <BankAccountItem key={chanceObj.guid()} data={item} />)}
       </div>
     </div>
   );
