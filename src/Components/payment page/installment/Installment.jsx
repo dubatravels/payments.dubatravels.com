@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Moment from "moment-timezone";
 import accounting from "accounting";
+import axios from "axios";
 
 import SuccessPage from "./success/SuccessPage";
 import RejectPage from "./reject/RejectPage";
@@ -16,6 +17,7 @@ function Installment({ installmentData }) {
 
   const [success, setSuccess] = useState(null);
   const [reject, setReject] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     if (installmentData.success || installmentData.status === "paid") {
@@ -38,9 +40,16 @@ function Installment({ installmentData }) {
     });
   }, []);
 
-  const onClickPayButton = () => {
-    // console.log(installmentData.checkoutURL);
-    window.location = installmentData.checkoutURL;
+  const onClickPayButton = async () => {
+    setDisabled(true);
+    const data = await axios.post("https://backend.dubatravels.com/payments/link", { id: installmentData.reference })
+    // const data = await axios.post("http://localhost:5000/payments/link", { id: installmentData.reference })
+      .then((res) => res.data)
+      .catch(() => null);
+    if (!data) return setDisabled(false);
+
+    window.location = data;
+    return false;
   };
 
   if (success) {
@@ -50,6 +59,9 @@ function Installment({ installmentData }) {
   if (reject) {
     return <RejectPage installmentData={installmentData} />;
   }
+
+  const capitalize = ([first, ...rest], lowerRest = false) => first.toUpperCase()
+  + (lowerRest ? rest.join("").toLowerCase() : rest.join(""));
 
   return (
     <div className="installments-page">
@@ -131,13 +143,17 @@ function Installment({ installmentData }) {
         </div>
       </div>
 
-      <div className="installments-page-button" onClick={onClickPayButton}>
+      <button type="button" disabled={disabled} className="installments-page-button" onClick={onClickPayButton}>
         <span>{`PAY ${accounting.formatMoney(installmentData.installment, "AED ")} TODAY`}</span>
-      </div>
+      </button>
 
       <div className="payment-page-pay-secured-message-section">
         <svg xmlns="http://www.w3.org/2000/svg" className="payment-page-pay-secured-message-section-icon" viewBox="0 0 24 24"><path d="M18 10v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10 0v-4c0-2.206 1.794-4 4-4s4 1.794 4 4v4h-8z" /></svg>
-        <span>Pay Securely with Spotii</span>
+        <span>
+          Pay Securely with
+          {" "}
+          {capitalize(installmentData.type)}
+        </span>
       </div>
 
       <div className="payment-page-icons-section">

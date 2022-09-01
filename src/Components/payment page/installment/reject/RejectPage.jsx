@@ -3,9 +3,8 @@ import React from "react";
 import "./reject page.css";
 
 function RejectPage({ installmentData }) {
-  const onClickRetryButton = () => {
-    window.location = installmentData.checkoutURL;
-  };
+  const capitalize = ([first, ...rest], lowerRest = false) => first.toUpperCase()
+  + (lowerRest ? rest.join("").toLowerCase() : rest.join(""));
 
   return (
     <div className="installment-reject-page">
@@ -15,28 +14,28 @@ function RejectPage({ installmentData }) {
       <h1>Something went wrong</h1>
       <div className="installment-reject-page-reason-section">
         <span>
-          Unfortunately, Spotii has rejected your payment attempt.
-          We recommend contacting Spotii Shopper Support at
+          Unfortunately,
+          {" "}
+          {capitalize(installmentData.type)}
+          {" "}
+          has rejected your payment attempt.
+          We recommend contacting
+          {" "}
+          {capitalize(installmentData.type)}
+          {" "}
+          Shopper Support at
           {" "}
           <a
             className="installment-reject-page-link"
-            href="tel:+971 4 275 3550"
+            href={`tel:${installmentData.type === "spotii" ? "+971 4 275 3550" : "800 82229"}`}
           >
-            +971 4 275 3550
+            {installmentData.type === "spotii" ? "+971 4 275 3550" : "800 82229"}
           </a>
           {" "}
           or contacting one of our travel agents for immediate assistance.
         </span>
       </div>
-      <div className="installment-reject-page-button-section">
-        <button
-          type="button"
-          className="installments-page-button"
-          onClick={onClickRetryButton}
-        >
-          <span>Retry Paying</span>
-        </button>
-      </div>
+
     </div>
   );
 }

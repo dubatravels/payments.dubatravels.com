@@ -24,7 +24,9 @@ function SuccessPage({ installmentData }) {
               {accounting.formatMoney(installmentData.amount, "AED ")}
             </span>
             <span>
-              Spotii Fee:
+              {installmentData.type}
+              {" "}
+              Fee:
               {" "}
               {accounting.formatMoney(installmentData.fees, "AED ")}
             </span>

@@ -4,6 +4,7 @@ import {
   useNavigate, useSearchParams,
 } from "react-router-dom";
 import accounting from "accounting";
+import isDev from "isdev";
 
 import Installment from "../../Components/payment page/installment/Installment";
 
@@ -29,10 +30,13 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
 
   const fetchInstallmentData = async (id) => {
     try {
-      let url = `https://backend.dubatravels.com/payments/installments/${id}`;
+      let baseURL = "https://backend.dubatravels.com";
+      if (isDev) baseURL = "http://localhost:5000";
+
+      let url = `${baseURL}/payments/installments/${id}`;
 
       const token = searchParams.get("token");
-      if (token) url = `https://backend.dubatravels.com/payments/installments/${id}?token=${token}`;
+      if (token) url = `${baseURL}/payments/installments/${id}?token=${token}`;
 
       const data = await axios.get(url)
         .then((response) => response.data)
@@ -56,7 +60,6 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
   const fetchInvoiceData = (id) => {
     try {
       axios.get(`https://backend.dubatravels.com/payments/${id}`)
-      // axios.get(`http://localhost:5000/payments/${id}`)
         .then((response) => {
           const {
             amount: resultAmount,
