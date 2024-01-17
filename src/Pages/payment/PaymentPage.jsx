@@ -1,18 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  useNavigate, useSearchParams,
-} from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import accounting from "accounting";
 import isDev from "isdev";
 
 import Installment from "../../Components/payment page/installment/Installment";
 
 import "./paymentpage.css";
+import SuccessPage from "../../Components/payment page/installment/success/SuccessPage";
 
 function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
   const [loading, setLoading] = useState(true);
   const [expired, setExpired] = useState(false);
+  const [paymentID, setPaymentID] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [disable, setDisable] = useState(false);
   const [dataType, setDataType] = useState(null);
   const [installmentData, setInstallmentData] = useState({});
   const [amount, setAmount] = useState({
@@ -21,6 +23,7 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
     total: "000.00",
     linkValue: 1,
     invoice: "",
+    paymentTerms: 0,
     date: "00/00/000",
     time: "00:00",
   });
@@ -36,40 +39,65 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
       let url = `${baseURL}/payments/installments/${id}`;
 
       const token = searchParams.get("token");
-      if (token) url = `${baseURL}/payments/installments/${id}?token=${token}`;
+      const paymentId = searchParams.get("payment_id");
+      if (token) url = `${baseURL}/payments/installments/${id}?token=${token}&payment_id=${paymentId || ""}`;
 
       const data = await axios.get(url)
         .then((response) => response.data)
-        .catch(() => navigate("/", { replace: true }));
+        .catch(() => null);
+
+      if (!data) { window.location = `/?id=${id}`; return; }
 
       if (data.status === "expired") {
         setExpired(true);
-        return setLoading(false);
+        setLoading(false);
+        return;
       }
 
       setInstallmentData(data);
       setSiteTitle("Installment Summary");
       setDataType("installment");
-      return setLoading(false);
+      setLoading(false);
     } catch (error) {
       setPaymentPage(false);
-      return navigate("/", { replace: true });
+      window.location = `/?id=${id}`;
     }
   };
 
   const fetchInvoiceData = (id) => {
     try {
-      axios.get(`https://backend.dubatravels.com/payments/${id}`)
+      const token = searchParams.get("token");
+
+      axios.get(`https://backend.dubatravels.com/payments/${id}${token ? `?token=${token}` : ""}`)
         .then((response) => {
           const {
             amount: resultAmount,
             date,
-            time, invoice,
+            time,
+            invoice,
             expired: expiredLink,
             grandTotal,
             fees,
             initiatedBy,
+            paid,
           } = response.data.paymentData;
+
+          if (paid) {
+            setAmount({
+              subtotal: resultAmount,
+              charges: fees,
+              total: grandTotal,
+              linkValue: grandTotal,
+              invoice,
+              date,
+              time,
+              initiatedBy,
+            });
+            setDataType("invoice");
+            setPaymentID(id);
+            setSuccess(true);
+            return setLoading(false);
+          }
 
           if (expiredLink) {
             setLoading(false);
@@ -107,8 +135,27 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
     }
   };
 
-  const onClickPayNow = () => {
-    window.location = `https://business.mamopay.com/pay/duba?a=${amount.linkValue}`;
+  const onClickPayNow = async () => {
+    if (disable) return;
+    setDisable(true);
+
+    const id = searchParams.get("id");
+
+    const payload = {
+      id,
+    };
+
+    const URL = await axios.post("https://backend.dubatravels.com/payments/card", payload)
+      .then((response) => response.data.url)
+      .catch(() => null);
+
+    if (!URL) {
+      window.location = `https://business.mamopay.com/pay/duba?a=${amount.linkValue}`;
+      setDisable(true);
+      return;
+    }
+
+    window.location = URL;
   };
 
   useEffect(() => {
@@ -143,6 +190,18 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
   }
 
   if (dataType === "invoice") {
+    if (success) {
+      return (
+        <SuccessPage installmentData={{
+          amount: amount.subtotal,
+          fees: amount.charges,
+          total: amount.total,
+          reference: paymentID,
+        }}
+        />
+      );
+    }
+
     return (
       <div className="payment-page">
         <div className="payment-page-heading">
@@ -190,7 +249,7 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
             </span>
           </div>
         </div>
-        <button type="button" className="payment-page-pay-button" onClick={onClickPayNow}>
+        <button type="button" disabled={disable} className="payment-page-pay-button" onClick={onClickPayNow}>
           <span>Pay Now</span>
         </button>
         <div className="payment-page-pay-secured-message-section">
@@ -223,7 +282,7 @@ function PaymentPage({ setSiteTitle, setSiteContent, setPaymentPage }) {
 
   if (dataType === "installment") return <Installment installmentData={installmentData} />;
 
-  return <div />;
+  return <div hidden />;
 }
 
 export default PaymentPage;

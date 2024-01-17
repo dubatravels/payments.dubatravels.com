@@ -92,7 +92,7 @@
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid lightgrey;
-  /* padding-top: 20px ; */
+  /* margin: 0 5%; */
   /* background: lavender; */
   border: 2px solid #000b5c;
   margin-bottom: 15px;
@@ -132,6 +132,15 @@
   font-weight: 900;
   font-size: larger;
   color: #000b5c;
+}
+
+.installments-page-pre-approval-section {
+  /* background: tomato; */
+  color: red;
+  font-weight: bold;
+  padding: 2% 5%;
+  /* margin: 5%; */
+  /* width: 100%; */
 }
 
 .installments-page-button {

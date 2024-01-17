@@ -2,22 +2,20 @@ import React, { useEffect, useState } from "react";
 import Moment from "moment-timezone";
 import accounting from "accounting";
 import axios from "axios";
+import Chance from "chance";
+import isDev from "isdev";
 
 import SuccessPage from "./success/SuccessPage";
 import RejectPage from "./reject/RejectPage";
 
 import "./installment.css";
 
+const chanceObj = new Chance();
 function Installment({ installmentData }) {
-  const [months, setMonths] = useState({
-    monthTwo: "",
-    monthThree: "",
-    monthFour: "",
-  });
-
   const [success, setSuccess] = useState(null);
   const [reject, setReject] = useState(null);
   const [disabled, setDisabled] = useState(false);
+  const [preApproved, setPreApproved] = useState(true);
 
   useEffect(() => {
     if (installmentData.success || installmentData.status === "paid") {
@@ -28,25 +26,19 @@ function Installment({ installmentData }) {
       return setReject(true);
     }
 
-    const moment = Moment().tz("Asia/Dubai");
-    const monthTwo = moment.add(1, "month").format("DD MMMM");
-    const monthThree = moment.add(1, "month").format("DD MMMM");
-    const monthFour = moment.add(1, "month").format("DD MMMM");
-
-    return setMonths({
-      monthTwo,
-      monthThree,
-      monthFour,
-    });
+    return true;
   }, []);
 
   const onClickPayButton = async () => {
     setDisabled(true);
-    const data = await axios.post("https://backend.dubatravels.com/payments/link", { id: installmentData.reference })
-    // const data = await axios.post("http://localhost:5000/payments/link", { id: installmentData.reference })
+
+    let url = "https://backend.dubatravels.com/payments/link";
+    if (isDev) url = "http://localhost:5000/payments/link";
+    const data = await axios.post(url, { id: installmentData.reference })
       .then((res) => res.data)
       .catch(() => null);
-    if (!data) return setDisabled(false);
+
+    if (!data) return setPreApproved(false);
 
     window.location = data;
     return false;
@@ -84,7 +76,11 @@ function Installment({ installmentData }) {
         </div>
         <div className="installments-page-info-item">
           <span>Payment Terms</span>
-          <span>Installment</span>
+          <span>
+            {capitalize(installmentData.type)}
+            {" "}
+            Installments
+          </span>
         </div>
         <div className="installments-page-info-item">
           <span>Issue Date</span>
@@ -127,25 +123,28 @@ function Installment({ installmentData }) {
         </div>
         <div className="installments-page-installments-section-item installments-page-installments-section-item-today">
           <span>Today</span>
-          <span>{accounting.formatMoney(installmentData.installment, "AED ")}</span>
+
+          <span>{accounting.formatMoney(installmentData.installmentInitial || installmentData.installment, "AED ")}</span>
+
         </div>
-        <div className="installments-page-installments-section-item">
-          <span>{months.monthTwo}</span>
-          <span>{accounting.formatMoney(installmentData.installment, "AED ")}</span>
-        </div>
-        <div className="installments-page-installments-section-item">
-          <span>{months.monthThree}</span>
-          <span>{accounting.formatMoney(installmentData.installment, "AED ")}</span>
-        </div>
-        <div className="installments-page-installments-section-item">
-          <span>{months.monthFour}</span>
-          <span>{accounting.formatMoney(installmentData.installment, "AED ")}</span>
-        </div>
+
+        {Array.from({ length: Math.floor(installmentData.paymentTerms) - 1 }, (data, i) => (
+          <div key={chanceObj.guid()} className="installments-page-installments-section-item">
+            <span>{Moment().tz("Asia/Dubai").add((i + 1), "month").format("DD MMMM")}</span>
+            <span>{accounting.formatMoney(installmentData.installment, "AED ")}</span>
+          </div>
+        ))}
       </div>
 
       <button type="button" disabled={disabled} className="installments-page-button" onClick={onClickPayButton}>
-        <span>{`PAY ${accounting.formatMoney(installmentData.installment, "AED ")} TODAY`}</span>
+        <span>{`PAY ${accounting.formatMoney(installmentData.installmentInitial || installmentData.installment, "AED ")} TODAY`}</span>
       </button>
+
+      {!preApproved && (
+      <div className="installments-page-pre-approval-section">
+        <span>User not Pre-Approved</span>
+      </div>
+      )}
 
       <div className="payment-page-pay-secured-message-section">
         <svg xmlns="http://www.w3.org/2000/svg" className="payment-page-pay-secured-message-section-icon" viewBox="0 0 24 24"><path d="M18 10v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10 0v-4c0-2.206 1.794-4 4-4s4 1.794 4 4v4h-8z" /></svg>
